@@ -157,7 +157,7 @@ Resources:
   eksNodeGroup:
     Type: AWS::EKS::Nodegroup
     Properties:
-      ClusterName: myEKSCluster
+      ClusterName: !Ref eksCluster
       NodeRole:
         "Fn::GetAtt": ["eksNodeRole", "Arn"]
       AmiType: AL2_x86_64
@@ -171,7 +171,8 @@ Resources:
         DesiredSize: 2
         MaxSize: 2
       Labels:
-        Project: !Ref ProjectName
+        Project: aws-eks
       Subnets:
-      - !Ref PublicSubnet1
-      - !Ref PublicSubnet2
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+    DependsOn: [eksCluster, eksNodeRole]
