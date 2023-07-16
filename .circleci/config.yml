@@ -77,6 +77,7 @@ jobs:
       - run: yum -y install tar gzip
       - run:
           name: Create eks
+          no_output_timeout: 45m
           command: |
             aws cloudformation deploy \
               --template-file ~/project/.circleci/files/eks.yml \
@@ -84,7 +85,8 @@ jobs:
               --parameter-overrides ProjectName="aws-devops" \
               --capabilities CAPABILITY_NAMED_IAM
               --tags project=capstone-devops
-
+      - destroy-environment:
+          stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
   deploy:
     docker:
       - image: amazon/aws-cli
