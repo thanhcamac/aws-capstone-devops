@@ -4,6 +4,7 @@ Parameters:
   ProjectName:
     Description: Project name
     Type: String
+    Default: EKS
   VpcCIDR: 
     Description: The IP range (CIDR notation) for this VPC
     Type: String
