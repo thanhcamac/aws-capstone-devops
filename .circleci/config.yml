@@ -79,7 +79,7 @@ jobs:
           name: Create eks
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/eks.yml \
+              --template-file ~/project/.circleci/files/eks.yml \
               --stack-name "eks-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
               --tags project=capstone-devops
