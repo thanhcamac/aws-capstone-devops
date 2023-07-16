@@ -106,7 +106,7 @@ jobs:
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker image pull macthanhca/price-prediction:0.1.$CIRCLE_BUILD_NUM
           kubectl run price-prediction\
-            --image=$dockerpath\
+            --image=macthanhca/price-prediction:0.1.$CIRCLE_BUILD_NUM\
             --port=80 --labels app=price-predictione
           kubectl get deploy,rs,svc,pods
           kubectl port-forward pod/price-prediction --address 0.0.0.0 8000:80
