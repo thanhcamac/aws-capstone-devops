@@ -34,7 +34,7 @@ Resources:
       CidrBlock: !Ref VpcCIDR
       EnableDnsHostnames: true
       Tags: 
-        - Project: Name 
+        - Key: Name 
           Value: !Ref ProjectName
   InternetGateway:
     Type: AWS::EC2::InternetGateway
