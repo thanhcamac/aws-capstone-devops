@@ -62,11 +62,13 @@ jobs:
           docker_layer_caching: true
 
       # build and push Docker image
-      - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build --platform=linux/amd64 --tag=macthanhca/price-prediction:$TAG .
-          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push macthanhca/price-prediction:$TAG
+      - run: 
+          name: build and push
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build --platform=linux/amd64 --tag=macthanhca/price-prediction:$TAG .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push macthanhca/price-prediction:$TAG
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
