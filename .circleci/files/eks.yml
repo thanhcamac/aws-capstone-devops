@@ -127,7 +127,7 @@ Resources:
     Type: AWS::EKS::Cluster
     Properties:
       Name: myEKSCluster
-      Version: 1.18
+      Version: 1.16
       RoleArn:
         "Fn::GetAtt": ["eksIAMRole", "Arn"]
       ResourcesVpcConfig:
