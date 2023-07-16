@@ -1,0 +1,124 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2.1
+
+commands:
+  destroy-environment:
+    description: Destroy cloudformation
+    parameters:
+      stack:
+        type: string  
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name << parameters.workflow_id >>
+
+jobs:
+  lint:
+    docker:
+      # Use the same Docker base as the project
+      - image: python:3.7.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      # run lint!
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint
+  build-upload:
+    docker:
+      - image: cimg/go:1.17
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
+
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+
+      # build and push Docker image
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build --platform=linux/amd64 --tag=macthanhca/price-prediction:$TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push macthanhca/price-prediction:$TAG
+  deploy-infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum -y install tar gzip
+      - run:
+          name: Create eks
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/eks.yml \
+              --stack-name "eks-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
+              --tags project=capstone-devops
+      - destroy-environment:
+          stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
+  deploy:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            yum install -y curl tar gzip sudo
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            kubectl version --client
+            aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
+            sudo apt install apt-transport-https ca-certificates curl software-properties-common
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+            apt-cache policy docker-ce
+            sudo apt install docker-ce
+            sudo systemctl status docker
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker image pull macthanhca/price-prediction:0.1.$CIRCLE_BUILD_NUM
+          kubectl run price-prediction\
+            --image=$dockerpath\
+            --port=80 --labels app=price-predictione
+          kubectl get deploy,rs,svc,pods
+          kubectl port-forward pod/price-prediction --address 0.0.0.0 8000:80
+      - destroy-environment:
+          stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
+workflows:
+  default:
+    jobs:
+      - lint
+      - build-upload:
+          requires: [lint]
+      - deploy-infrastructure:
+          requires: [build-upload]
+      - deploy:
+          requires: [deploy-infrastructure]
