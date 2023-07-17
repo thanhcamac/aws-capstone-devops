@@ -99,8 +99,6 @@ jobs:
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
             yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm
             yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm
-            systemctl start docker
-            systemctl enable docker
             docker --version
       - run:
           name: Pull image and deploy to 
