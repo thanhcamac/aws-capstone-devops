@@ -97,13 +97,10 @@ jobs:
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
-            sudo yum update
-            sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-            sudo yum install -y docker-ce
-            sudo systemctl start docker
-            sudo systemctl enable docker
-            docker run -v /var/run/docker.sock:/var/run/docker.sock amazon/aws-cli
+            sudo yum update -y
+            sudo yum install -y docker
+            sudo service docker start
+
       - run:
           name: Pull image and deploy to 
           command: |
