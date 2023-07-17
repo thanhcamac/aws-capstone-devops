@@ -101,12 +101,13 @@ jobs:
             sudo yum makecache
             sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
             sudo yum install -y yum-utils
-            echo '[docker-ce-stable]
-name=Docker CE Stable - $basearch
-baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
-enabled=1
-gpgcheck=1
-gpgkey=https://download.docker.com/linux/centos/gpg' >> /etc/yum.repos.d/docker.repo
+            echo "[docker-ce-stable]" >> /etc/yum.repos.d/docker.repo
+            echo "name=Docker CE Stable - $basearch" >> /etc/yum.repos.d/docker.repo
+            echo "baseurl=https://download.docker.com/linux/centos/7/$basearch/stable" >> /etc/yum.repos.d/docker.repo
+            echo "enabled=1" >> /etc/yum.repos.d/docker.repo
+            echo "gpgcheck=1" >> /etc/yum.repos.d/docker.repo
+            echo "gpgkey=https://download.docker.com/linux/centos/gpg" >> /etc/yum.repos.d/docker.repo
+
             sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
             sudo yum install -y docker-ce docker-ce-cli containerd.io
             sudo systemctl start docker
