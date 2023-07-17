@@ -17,7 +17,7 @@ RUN pip3 install --no-cache-dir numpy &&\
 
 ## Step 4:
 # Expose port 80
-EXPOSES 80
+EXPOSE 80
 
 ## Step 5:
 # Run app.py at container launch
