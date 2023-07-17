@@ -6,7 +6,8 @@ Building pipelines
 Working with CloudFormation to deploy clusters
 Building Kubernetes clusters
 Building Docker containers in pipelines
-
+# Git link:
+https://github.com/thanhcamac/aws-capstone-devops.git
 # Screenshot of the Circle CI or Jenkins pipeline showing all stages passed successfully.
 ![S1](./screenshots/SCREENSHOT01.png)
 # Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
