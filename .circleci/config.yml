@@ -97,9 +97,14 @@ jobs:
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
-            yum update -y
-            yum -y install docker
-            service docker start
+            yum install -y yum-utils \
+              device-mapper-persistent-data \
+              lvm2 
+            yum-config-manager --enable rhui-REGION-rhel-server-extras
+            yum -y install docker 
+            systemctl start docker
+            systemctl enable docker
+            docker version
       - run:
           name: Pull image and deploy to 
           command: |
