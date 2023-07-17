@@ -105,7 +105,7 @@ jobs:
               --add-repo \
               https://download.docker.com/linux/centos/docker-ce.repo
             yum-config-manager --enable docker-ce-edge
-            yum install docker-ce
+            yum install docker --disablerepo=docker-ce-stable
       - run:
           name: Pull image and deploy to 
           command: |
