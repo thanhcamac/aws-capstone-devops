@@ -101,6 +101,7 @@ jobs:
               device-mapper-persistent-data \
               lvm2 
             yum-config-manager --enable rhui-REGION-rhel-server-extras
+            subscription-manager repos --enable=rhel-7-server-extras-rpms
             yum -y install docker 
             systemctl start docker
             systemctl enable docker
