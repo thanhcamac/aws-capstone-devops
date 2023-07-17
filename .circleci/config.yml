@@ -97,10 +97,8 @@ jobs:
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
-            curl -fsSL https://get.docker.com/ | sh
+            yum install docker -y
             systemctl start docker
-            systemctl status docker
-            systemctl enable docker
       - run:
           name: Pull image and deploy to 
           command: |
