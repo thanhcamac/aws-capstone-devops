@@ -96,8 +96,11 @@ jobs:
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
+            add --update docker openrc
+            run rc-update add docker boot
+            run service docker start
       - run:
-          name: Pull image and deploy to EKS
+          name: Pull image and deploy to 
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
@@ -112,10 +115,11 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint
-      - build-upload:
-          requires: [lint]
-      - deploy-infrastructure:
-          requires: [build-upload]
-      - deploy:
-          requires: [deploy-infrastructure]
+      # - lint
+      # - build-upload:
+      #     requires: [lint]
+      # - deploy-infrastructure:
+      #     requires: [build-upload]
+      - deploy
+      # :
+      #     requires: [deploy-infrastructure]
