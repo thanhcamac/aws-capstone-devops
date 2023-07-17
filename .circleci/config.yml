@@ -86,9 +86,11 @@ jobs:
   deploy:
     docker:
       - image: amazon/aws-cli
-      - image: cimg/go:1.17
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
       - run:
           name: Install dependencies
           command: |
