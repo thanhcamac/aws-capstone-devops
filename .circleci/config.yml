@@ -114,17 +114,15 @@ jobs:
               --image=macthanhca/price-prediction:0.1.68\
               --port=80 --labels app=price-predictione
             kubectl get deploy,rs,svc,pods
-            kubectl port-forward pod/price-prediction --address 0.0.0.0 8000:80
-      # - destroy-environment:
-      #     stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
   default:
     jobs:
-      # - lint
-      # - build-upload:
-      #     requires: [lint]
-      # - deploy-infrastructure:
-      #     requires: [build-upload]
-      - deploy
-      # :
-      #     requires: [deploy-infrastructure]
+      - lint
+      - build-upload:
+          requires: [lint]
+      - deploy-infrastructure:
+          requires: [build-upload]
+      - deploy:
+          requires: [deploy-infrastructure]
