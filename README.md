@@ -1,17 +1,18 @@
-[![CircleCI](https://circleci.com/gh/thanhcamac/project-ml-microservice-kubernetes.svg?style=svg&circle-token=7b2361fc7cdd71f0fc050cdfe30ab9992c255230)](https://app.circleci.com/pipelines/gh/thanhcamac/project-ml-microservice-kubernetes)
-
 ## Summary of the project:
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API.
+In this project I will apply the skills and knowledge which were developed throughout the Cloud DevOps Nanodegree program. These include:
+Working in AWS
+Using Circle CI to implement Continuous Integration and Continuous Deployment
+Building pipelines
+Working with CloudFormation to deploy clusters
+Building Kubernetes clusters
+Building Docker containers in pipelines
 
-You are given a pre-trained, sklearn model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on the data source site. This project tests your ability to operationalize a Python flask app—in a provided file, app.py—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
-
-## How to run the Python scripts and web app
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-## Kubernetes Steps
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+# Screenshot of the Circle CI or Jenkins pipeline showing all stages passed successfully.
+![S1](./screenshots/SCREENSHOT01.png)
+# Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
+![S2](./screenshots/SCREENSHOT02.png)
+# Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
+![S3](./screenshots/SCREENSHOT03.png)
+# Screenshot showing that you can access the application after deployment.
+![S4](./screenshots/SCREENSHOT04_1.png)
+![S4](./screenshots/SCREENSHOT04_2.png)

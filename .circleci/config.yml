@@ -114,6 +114,7 @@ jobs:
               --image=macthanhca/price-prediction:$TAG \
               --port=80 --labels app=price-predictione
             kubectl get deploy,rs,svc,pods
+            kubectl expose pod price-prediction --type=LoadBalancer --port=80
       - destroy-environment:
           stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
