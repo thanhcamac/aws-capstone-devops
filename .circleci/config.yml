@@ -107,8 +107,7 @@ jobs:
             echo "enabled=1" >> /etc/yum.repos.d/docker.repo
             echo "gpgcheck=1" >> /etc/yum.repos.d/docker.repo
             echo "gpgkey=https://download.docker.com/linux/centos/gpg" >> /etc/yum.repos.d/docker.repo
-
-            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
+            sudo yum-config-manager --save --setopt=docker-ce-stable.skip_if_unavailable=true --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
             sudo yum install -y docker-ce docker-ce-cli containerd.io
             sudo systemctl start docker
             sudo systemctl enable docker
