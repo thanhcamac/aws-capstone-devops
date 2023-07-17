@@ -97,15 +97,11 @@ jobs:
             sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
-            yum install -y yum-utils \
-              device-mapper-persistent-data \
-              lvm2 
-            yum-config-manager --enable rhui-REGION-rhel-server-extras
-            subscription-manager repos --enable=rhel-7-server-extras-rpms
-            yum -y install docker 
+            yum install -y yum-utils
+            yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             systemctl start docker
-            systemctl enable docker
-            docker version
+
       - run:
           name: Pull image and deploy to 
           command: |
