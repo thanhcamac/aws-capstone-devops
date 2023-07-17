@@ -104,7 +104,6 @@ jobs:
           name: Pull image and deploy to 
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker image pull macthanhca/price-prediction:0.1.$CIRCLE_BUILD_NUM
             kubectl run price-prediction\
               --image=macthanhca/price-prediction:0.1.$CIRCLE_BUILD_NUM\
