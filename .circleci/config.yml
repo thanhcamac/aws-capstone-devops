@@ -83,7 +83,7 @@ jobs:
               --template-file ~/project/.circleci/files/eks.yml \
               --stack-name "eks-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ProjectName="aws-devops" \
-              --capabilities CAPABILITY_NAMED_IAM
+              --capabilities CAPABILITY_NAMED_IAM \
               --tags project=capstone-devops
       - destroy-environment:
           stack: eks-${CIRCLE_WORKFLOW_ID:0:7}
