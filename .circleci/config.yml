@@ -99,7 +99,7 @@ jobs:
             aws eks --region us-east-1 update-kubeconfig --name myEKSCluster
             yum install -y yum-utils
             yum-config-manager --setopt="docker-ce-stable.baseurl=https://download.docker.com/linux/centos/7/x86_64/stable" --save
-            yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            yum install docker-ce docker-ce-cli containerd.io
             systemctl start docker
 
       - run:
