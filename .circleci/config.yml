@@ -100,12 +100,11 @@ jobs:
             yum install -y yum-utils \
               device-mapper-persistent-data \
               lvm2 
-            yum-config-manager --save --setopt=docker-ce-stable.skip_if_unavailable=true
             yum-config-manager \
               --add-repo \
               https://download.docker.com/linux/centos/docker-ce.repo
             yum-config-manager --enable docker-ce-edge
-            yum install docker --disablerepo=docker-ce-stable
+            yum install docker-ce --disablerepo=docker-ce-stable
       - run:
           name: Pull image and deploy to 
           command: |
