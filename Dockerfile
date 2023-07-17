@@ -11,13 +11,13 @@ COPY . /app/
 ## Step 3:
 # Install packages from requirements.txt
 # hadolint ignore=DL3013
-RUN pip3 install numpy &&\
-    pip install --upgrade pip &&\
+RUN pip3 install --no-cache-dir numpy &&\
+    pip install --no-cache-dir --upgrade pip &&\
     pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
 
 ## Step 4:
 # Expose port 80
-EXPOSE 80
+EXPOSES 80
 
 ## Step 5:
 # Run app.py at container launch
