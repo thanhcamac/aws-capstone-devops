@@ -11,8 +11,8 @@ COPY . /app/
 ## Step 3:
 # Install packages from requirements.txt
 # hadolint ignore=DL3013
-RUN pip3 --AAAAA install --no-cache-dir numpy &&\
-    pip install --no-cache-dir --upgrade pip &&\
+RUN pip3 install numpy &&\
+    pip install --upgrade pip &&\
     pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
 
 ## Step 4:

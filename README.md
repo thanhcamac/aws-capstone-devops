@@ -17,3 +17,8 @@ https://github.com/thanhcamac/aws-capstone-devops.git
 # Screenshot showing that you can access the application after deployment.
 ![S4](./screenshots/SCREENSHOT04_1.png)
 ![S4](./screenshots/SCREENSHOT04_2.png)
+# Screenshot execute linting step in code pipeline
+- Fail
+![S5](./screenshots/SCREENSHOT05_1.png)
+![S5](./screenshots/SCREENSHOT05_2.png)
+- Success
